@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synth - World-Class Color Palettes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,700&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --live: #8B5CF6;
+  --bg:   #F9F8F5;
+  --surface: #FFFFFF;
+  --text: #141210;
+  --mid:  #6B6560;
+  --dim:  #B0A99F;
+  --border: #E8E2D9;
+  --radius: 12px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Grain ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9000;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  padding: 72px 40px 56px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Animated gradient blob behind hero */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  transition: background 0.8s ease;
+}
+.blob1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--live) 25%, transparent) 0%, transparent 70%);
+  top: -200px; right: -100px;
+  animation: blobDrift1 18s ease-in-out infinite;
+}
+.blob2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--live) 15%, transparent) 0%, transparent 70%);
+  bottom: -200px; left: 20%;
+  animation: blobDrift2 22s ease-in-out infinite;
+}
+
+@keyframes blobDrift1 {
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%    { transform: translate(-60px, 40px) scale(1.1); }
+}
+@keyframes blobDrift2 {
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%    { transform: translate(80px,-60px) scale(1.15); }
+}
+
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.hero-left {}
+
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 12px;
+  display: block;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 10vw, 112px);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -3px;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--live);
+  transition: color 0.5s ease;
+  display: inline-block;
+}
+
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.hero-sub strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.count-badge {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--live);
+  line-height: 1;
+  transition: color 0.5s;
+  letter-spacing: -2px;
+}
+
+.count-sub {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.domain-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--dim);
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 48px 20px 40px; }
+  .hero-right { display: none; }
+  h1 { font-size: 56px; }
+}
+
+/* CONTROLS */
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(249,248,245,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 40px;
+}
+
+.controls-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Search */
+.search-wrap {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dim);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+#search {
+  width: 100%;
+  padding: 13px 18px 13px 46px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#search::placeholder { color: var(--dim); }
+
+#search:focus {
+  border-color: var(--live);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--live) 12%, transparent);
+}
+
+/* Categories */
+.cats {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.cats::-webkit-scrollbar { display: none; }
+
+.cat-btn {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--mid);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cat-btn:hover {
+  border-color: var(--live);
+  color: var(--live);
+}
+
+.cat-btn.active {
+  background: var(--live);
+  border-color: var(--live);
+  color: #fff;
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--live) 30%, transparent);
+}
+
+@media (max-width: 640px) {
+  .controls { padding: 12px 16px; }
+}
+
+/* GRID */
+.grid-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 40px 80px;
+}
+
+.results-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 780px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px)  { .grid-wrap { padding: 20px 16px 60px; } }
+
+/* ─── Card ─── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34,1.4,0.64,1),
+              box-shadow 0.25s ease,
+              border-color 0.2s;
+  animation: cardIn 0.4s both ease;
+  position: relative;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.06);
+  border-color: var(--live);
+}
+
+/* Color bar */
+.card-bar {
+  height: 64px;
+  display: flex;
+  transition: height 0.3s cubic-bezier(0.34,1.2,0.64,1);
+  overflow: hidden;
+}
+
+.card:hover .card-bar { height: 80px; }
+
+.card-bar-strip {
+  flex: 1;
+  position: relative;
+  transition: flex 0.3s;
+}
+
+/* Hex on hover */
+.card-bar-strip::after {
+  content: attr(data-hex);
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.card:hover .card-bar-strip::after { opacity: 1; }
+
+/* Card body */
+.card-body {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  line-height: 1.1;
+  transition: color 0.2s;
+}
+
+.card:hover .card-name { color: var(--live); }
+
+.card-cat {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Copy row (shown on hover) */
+.card-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.2s;
+  flex-wrap: wrap;
+}
+
+.card:hover .card-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.copy-swatch {
+  height: 22px;
+  flex: 1;
+  min-width: 40px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.copy-swatch:hover {
+  transform: scaleY(1.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.copy-swatch::after {
+  content: 'COPY';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.copy-swatch:hover::after { opacity: 1; }
+
+/* CSS button */
+.copy-css-btn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--mid);
+  cursor: pointer;
+  transition: all 0.15s;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.2s;
+}
+
+.card:hover .copy-css-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.copy-css-btn:hover {
+  border-color: var(--live);
+  color: var(--live);
+  background: color-mix(in srgb, var(--live) 6%, transparent);
+}
+
+/* Empty state */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--dim);
+}
+
+.no-results-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 9999;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <span class="hero-eyebrow">synth.mvp.bd</span>
+      <h1>Color<br><em>Synth</em></h1>
+      <p class="hero-sub">
+        <strong>220+ world-class palettes</strong> curated for extraordinary UI design.
+        Brand DNA, neons, earthy tones, art movements — everything a designer needs.
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="count-badge" id="liveCount">220</div>
+      <div class="count-sub">Curated Palettes</div>
+      <div class="domain-pill">synth.mvp.bd</div>
+    </div>
+  </div>
+</section>
+
+<!-- Controls -->
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search" placeholder="Search palettes… try 'neon', 'brand', 'dark'" oninput="filterAll()">
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+</div>
+
+<!-- Grid -->
+<div class="grid-wrap">
+  <div class="results-meta" id="meta"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+// PALETTE DATA — 220+ entries
+
+const P = [
+  // Brand DNA; DNA!? WTF :) (30) 
+  {n:"Spotify",           c:"Brand DNA",       h:["#1DB954","#191414","#FFFFFF","#535353"]},
+  {n:"Notion Dark",       c:"Brand DNA",       h:["#37352F","#2F2F2F","#FFFFFF","#6B7280"]},
+  {n:"Linear",            c:"Brand DNA",       h:["#5E6AD2","#F7F8F8","#FFFFFF","#1A1A2E"]},
+  {n:"Vercel",            c:"Brand DNA",       h:["#000000","#FFFFFF","#888888","#444444"]},
+  {n:"Figma",             c:"Brand DNA",       h:["#F24E1E","#FF7262","#A259FF","#0ACF83"]},
+  {n:"Stripe",            c:"Brand DNA",       h:["#635BFF","#0A2540","#00D4FF","#FFFFFF"]},
+  {n:"GitHub Dark",       c:"Brand DNA",       h:["#0D1117","#238636","#58A6FF","#F0F6FC"]},
+  {n:"Discord",           c:"Brand DNA",       h:["#5865F2","#2C2F33","#23272A","#FFFFFF"]},
+  {n:"Slack",             c:"Brand DNA",       h:["#611F69","#36C5F0","#2EB67D","#E01E5A"]},
+  {n:"Airbnb",            c:"Brand DNA",       h:["#FF5A5F","#484848","#767676","#FFFFFF"]},
+  {n:"Netflix",           c:"Brand DNA",       h:["#E50914","#141414","#B9090B","#FFFFFF"]},
+  {n:"Dribbble",          c:"Brand DNA",       h:["#EA4C89","#FFFFFF","#444444","#F7F7F7"]},
+  {n:"TikTok",            c:"Brand DNA",       h:["#010101","#FE2C55","#25F4EE","#FFFFFF"]},
+  {n:"Supabase",          c:"Brand DNA",       h:["#3ECF8E","#1C1C1C","#FFFFFF","#171717"]},
+  {n:"Tailwind CSS",      c:"Brand DNA",       h:["#38BDF8","#0F172A","#7DD3FC","#E2E8F0"]},
+  {n:"Framer",            c:"Brand DNA",       h:["#0099FF","#000000","#FFFFFF","#1A1A1A"]},
+  {n:"Twitch",            c:"Brand DNA",       h:["#9146FF","#0E0E10","#FFFFFF","#18181B"]},
+  {n:"OpenAI",            c:"Brand DNA",       h:["#10A37F","#FFFFFF","#202123","#353740"]},
+  {n:"Anthropic",         c:"Brand DNA",       h:["#D97757","#191919","#FFFFFF","#CC785C"]},
+  {n:"Duolingo",          c:"Brand DNA",       h:["#58CC02","#1CB0F6","#FF4B4B","#FFFFFF"]},
+  {n:"Behance",           c:"Brand DNA",       h:["#1769FF","#FFFFFF","#000000","#313131"]},
+  {n:"Product Hunt",      c:"Brand DNA",       h:["#DA552F","#FFFFFF","#000000","#F9F9F9"]},
+  {n:"Loom",              c:"Brand DNA",       h:["#8D5CF6","#FFFFFF","#F5F5F5","#1A1A2E"]},
+  {n:"Robinhood",         c:"Brand DNA",       h:["#00C805","#000000","#FFFFFF","#1A1A1A"]},
+  {n:"Headspace",         c:"Brand DNA",       h:["#F47D31","#FABE58","#3E9FDA","#ED3A4E"]},
+  {n:"Calm",              c:"Brand DNA",       h:["#407BFF","#3A7BD5","#00D2FF","#FFFFFF"]},
+  {n:"Medium",            c:"Brand DNA",       h:["#000000","#FFFFFF","#1A8917","#292929"]},
+  {n:"Ghost",             c:"Brand DNA",       h:["#15171A","#738A94","#3EB0EF","#FFFFFF"]},
+  {n:"Substack",          c:"Brand DNA",       h:["#FF6719","#FFFFFF","#000000","#1A1A1A"]},
+  {n:"Hacker News",       c:"Brand DNA",       h:["#FF6600","#FFFFFF","#000000","#F6F6EF"]},
+
+  // ── Nature (25) ─────────────────
+  {n:"Deep Ocean",        c:"Nature",          h:["#003566","#001D3D","#000814","#FFC300"]},
+  {n:"Aurora Borealis",   c:"Nature",          h:["#00F5D4","#00BBF9","#9B5DE5","#0D0D0D"]},
+  {n:"Midnight Forest",   c:"Nature",          h:["#1A2F23","#2D5A27","#52B788","#B7E4C7"]},
+  {n:"Desert Sand",       c:"Nature",          h:["#C9A96E","#A0785A","#7B4F2E","#F5DEB3"]},
+  {n:"Arctic Ice",        c:"Nature",          h:["#CAF0F8","#90E0EF","#0077B6","#03045E"]},
+  {n:"Tropical Reef",     c:"Nature",          h:["#06D6A0","#118AB2","#FFD166","#EF476F"]},
+  {n:"Cherry Blossom",    c:"Nature",          h:["#FFB7C5","#FF8FA3","#C9184A","#FFF0F3"]},
+  {n:"Volcanic",          c:"Nature",          h:["#370617","#6A040F","#D62828","#F77F00"]},
+  {n:"Lavender Fields",   c:"Nature",          h:["#E0AAFF","#C77DFF","#7B2FBE","#10002B"]},
+  {n:"Northern Pines",    c:"Nature",          h:["#1B4332","#2D6A4F","#52B788","#D8F3DC"]},
+  {n:"Sahara Dusk",       c:"Nature",          h:["#E9C46A","#F4A261","#E76F51","#264653"]},
+  {n:"Glacial Lake",      c:"Nature",          h:["#A8DADC","#457B9D","#1D3557","#E63946"]},
+  {n:"Bioluminescence",   c:"Nature",          h:["#00FFCC","#0080FF","#8000FF","#000B18"]},
+  {n:"Autumn Maple",      c:"Nature",          h:["#D62828","#F77F00","#FCBF49","#EAE2B7"]},
+  {n:"Monsoon Sky",       c:"Nature",          h:["#4A4E69","#9A8C98","#C9ADA7","#F2E9E4"]},
+  {n:"Coral Reef",        c:"Nature",          h:["#FF6B6B","#FFA07A","#20B2AA","#48CAE4"]},
+  {n:"Spring Bloom",      c:"Nature",          h:["#FDFFB6","#CAFFBF","#9BF6FF","#BDB2FF"]},
+  {n:"Redwood Forest",    c:"Nature",          h:["#6D2B00","#A04000","#D35400","#F39C12"]},
+  {n:"Pacific Fog",       c:"Nature",          h:["#B0C4B1","#4A5568","#2D3748","#89B0AE"]},
+  {n:"Golden Hour",       c:"Nature",          h:["#F7B731","#F0932B","#EB2F06","#F9CA24"]},
+  {n:"Starless Night",    c:"Nature",          h:["#0A0A0F","#1A1A2E","#16213E","#0F3460"]},
+  {n:"Meadow After Rain", c:"Nature",          h:["#4CAF50","#81C784","#C8E6C9","#1B5E20"]},
+  {n:"Obsidian Coast",    c:"Nature",          h:["#263238","#37474F","#546E7A","#90A4AE"]},
+  {n:"Lava Flow",         c:"Nature",          h:["#BF360C","#E64A19","#FF7043","#FFCCBC"]},
+  {n:"Fjord Mist",        c:"Nature",          h:["#607D8B","#78909C","#B0BEC5","#ECEFF1"]},
+
+  // ── Neon & Cyber (20) ───────────
+  {n:"Neon Tokyo",        c:"Neon & Cyber",    h:["#FF0090","#00F0FF","#FF6500","#0D0D0D"]},
+  {n:"Cyberpunk 2077",    c:"Neon & Cyber",    h:["#FCEE0A","#00F0FF","#FF003C","#0D0221"]},
+  {n:"Synthwave",         c:"Neon & Cyber",    h:["#FF006E","#8338EC","#3A86FF","#06000F"]},
+  {n:"Outrun",            c:"Neon & Cyber",    h:["#FF6EC7","#7B00FF","#00FFFF","#1A0033"]},
+  {n:"Blade Runner",      c:"Neon & Cyber",    h:["#FF5500","#00AAFF","#CC00FF","#0A0A0A"]},
+  {n:"Electric Lime",     c:"Neon & Cyber",    h:["#39FF14","#00FF00","#0D0D0D","#1A1A1A"]},
+  {n:"Plasma",            c:"Neon & Cyber",    h:["#FF00FF","#8800FF","#0000FF","#000033"]},
+  {n:"Vapor Grid",        c:"Neon & Cyber",    h:["#FF71CE","#01CDFE","#05FFA1","#B967FF"]},
+  {n:"Tron Legacy",       c:"Neon & Cyber",    h:["#00CCFF","#0088BB","#005577","#001122"]},
+  {n:"Holographic",       c:"Neon & Cyber",    h:["#FF7EB3","#7EB8FF","#B3FFB8","#FFD97D"]},
+  {n:"Digital Rain",      c:"Neon & Cyber",    h:["#00FF41","#003B00","#001700","#008F11"]},
+  {n:"Laser Show",        c:"Neon & Cyber",    h:["#FF0000","#FF8800","#FFFF00","#000000"]},
+  {n:"Neon Jungle",       c:"Neon & Cyber",    h:["#00FF41","#FF00FF","#FFFF00","#0D0D0D"]},
+  {n:"Retrowave",         c:"Neon & Cyber",    h:["#FF6EC7","#7B00FF","#00CFCF","#1A0033"]},
+  {n:"Glitch Art",        c:"Neon & Cyber",    h:["#FF0000","#00FF00","#0000FF","#000000"]},
+  {n:"Hyper Violet",      c:"Neon & Cyber",    h:["#7400FF","#5200B3","#3A0080","#1F0040"]},
+  {n:"Neo Mint",          c:"Neon & Cyber",    h:["#00FFCC","#00CCA3","#00997A","#006652"]},
+  {n:"Datamosh",          c:"Neon & Cyber",    h:["#FF0055","#00FFAA","#FFFF00","#1A0011"]},
+  {n:"UV Glow",           c:"Neon & Cyber",    h:["#7F00FF","#CC00FF","#FF00FF","#0D0013"]},
+  {n:"CRT Phosphor",      c:"Neon & Cyber",    h:["#33FF00","#004400","#001100","#AAFFAA"]},
+
+  // ── Pastels (15) ────────────────
+  {n:"Cotton Candy",      c:"Pastels",         h:["#FFD6E7","#FFC8DD","#BDE0FE","#CDB4DB"]},
+  {n:"Ice Cream",         c:"Pastels",         h:["#FDFFB6","#CAFFBF","#9BF6FF","#FFB5A7"]},
+  {n:"Macaron",           c:"Pastels",         h:["#FFB3C6","#BDE0FE","#B5EAD7","#FFDAC1"]},
+  {n:"Peach Sorbet",      c:"Pastels",         h:["#FFCBA4","#FFB347","#FF8C69","#FFF5EE"]},
+  {n:"Lavender Dream",    c:"Pastels",         h:["#E8D5F5","#D4B8E0","#C39BD3","#F5EEF8"]},
+  {n:"Mint Julep",        c:"Pastels",         h:["#ABEBC6","#82E0AA","#58D68D","#EAFAF1"]},
+  {n:"Baby Blue",         c:"Pastels",         h:["#FADADD","#B5EAD7","#C7CEEA","#FFEFD5"]},
+  {n:"Sherbet",           c:"Pastels",         h:["#FF9AA2","#FFB7B2","#FFDAC1","#E2F0CB"]},
+  {n:"Cloud Nine",        c:"Pastels",         h:["#E0FBFC","#C2DFE3","#9DB4C0","#5C6B73"]},
+  {n:"Rose Quartz",       c:"Pastels",         h:["#F7CAC9","#92A8D1","#955251","#B5838D"]},
+  {n:"Fairy Floss",       c:"Pastels",         h:["#FFC8DD","#FFAFCC","#BDE0FE","#CDB4DB"]},
+  {n:"Blush",             c:"Pastels",         h:["#FFE4E1","#FFB6C1","#FF69B4","#DB7093"]},
+  {n:"Pistachio",         c:"Pastels",         h:["#CAFFC5","#A8E6A3","#88D38B","#68C072"]},
+  {n:"Periwinkle",        c:"Pastels",         h:["#CCCCFF","#AAAAEE","#8888DD","#6666CC"]},
+  {n:"Powder Room",       c:"Pastels",         h:["#F8E1F4","#E4C1E8","#D0A1DC","#BC81D0"]},
+
+  // ── Earth & Organic (15) ────────
+  {n:"Clay Studio",       c:"Earth & Organic", h:["#C9A87C","#A07850","#7A5230","#4A3020"]},
+  {n:"Wabi Sabi",         c:"Earth & Organic", h:["#E8D5B7","#C4A882","#8B6914","#5C4A1E"]},
+  {n:"Terracotta",        c:"Earth & Organic", h:["#C45C26","#9C4012","#6B2D0A","#E8A87C"]},
+  {n:"Sage Garden",       c:"Earth & Organic", h:["#87A96B","#6B8E5A","#4F6B43","#D4E6C3"]},
+  {n:"Burnt Sienna",      c:"Earth & Organic", h:["#E97451","#C1440E","#8B3103","#F5CBA7"]},
+  {n:"Moss & Stone",      c:"Earth & Organic", h:["#606C38","#283618","#DDA15E","#BC6C25"]},
+  {n:"Desert Rose",       c:"Earth & Organic", h:["#C47C7C","#A05050","#7A3030","#F5C5A3"]},
+  {n:"Olive Grove",       c:"Earth & Organic", h:["#6B7C45","#4A5530","#2E3A1E","#B5BF85"]},
+  {n:"Sandstone",         c:"Earth & Organic", h:["#C2A97D","#A07E52","#7A5C2A","#E8D5B5"]},
+  {n:"Rustic Wood",       c:"Earth & Organic", h:["#8B4513","#A0522D","#6B3010","#DEB887"]},
+  {n:"Mycelium",          c:"Earth & Organic", h:["#D4CDB7","#B5A99A","#8C7B6B","#5C4A3A"]},
+  {n:"Spice Market",      c:"Earth & Organic", h:["#C0392B","#D35400","#F39C12","#27AE60"]},
+  {n:"Raw Linen",         c:"Earth & Organic", h:["#FAF0E6","#F5DEB3","#DEB887","#D2B48C"]},
+  {n:"Peat Bog",          c:"Earth & Organic", h:["#3D2B1F","#5C4033","#7A5C47","#9E8070"]},
+  {n:"Hemp",              c:"Earth & Organic", h:["#C5B99A","#A89880","#8B7765","#6E5649"]},
+
+  // ── Design Systems (20) ─────────
+  {n:"Material You",      c:"Design Systems",  h:["#6750A4","#625B71","#7D5260","#FFFBFE"]},
+  {n:"Ant Design",        c:"Design Systems",  h:["#1677FF","#0958D9","#FAAD14","#52C41A"]},
+  {n:"Chakra UI",         c:"Design Systems",  h:["#319795","#2C7A7B","#285E61","#E6FFFA"]},
+  {n:"Radix Violet",      c:"Design Systems",  h:["#6E56CF","#5746AF","#32275F","#F5F2FF"]},
+  {n:"Shadcn",            c:"Design Systems",  h:["#18181B","#FFFFFF","#A1A1AA","#3F3F46"]},
+  {n:"IBM Carbon",        c:"Design Systems",  h:["#0F62FE","#393939","#161616","#F4F4F4"]},
+  {n:"Nord",              c:"Design Systems",  h:["#2E3440","#3B4252","#88C0D0","#EBCB8B"]},
+  {n:"Dracula",           c:"Design Systems",  h:["#282A36","#BD93F9","#FF79C6","#50FA7B"]},
+  {n:"Catppuccin Mocha",  c:"Design Systems",  h:["#1E1E2E","#CBA6F7","#F38BA8","#89DCEB"]},
+  {n:"Solarized Dark",    c:"Design Systems",  h:["#002B36","#268BD2","#859900","#DC322F"]},
+  {n:"One Dark",          c:"Design Systems",  h:["#282C34","#61AFEF","#98C379","#E06C75"]},
+  {n:"Monokai Pro",       c:"Design Systems",  h:["#272822","#F92672","#A6E22E","#E6DB74"]},
+  {n:"GitHub Primer",     c:"Design Systems",  h:["#0969DA","#1F883D","#CF222E","#9A6700"]},
+  {n:"Fluent 2",          c:"Design Systems",  h:["#0078D4","#005A9E","#004578","#FFFFFF"]},
+  {n:"Apple HIG",         c:"Design Systems",  h:["#007AFF","#34C759","#FF3B30","#FF9500"]},
+  {n:"Bootstrap 5",       c:"Design Systems",  h:["#0D6EFD","#198754","#DC3545","#FFC107"]},
+  {n:"Atlassian",         c:"Design Systems",  h:["#0052CC","#0747A6","#00B8D9","#36B37E"]},
+  {n:"Polaris Shopify",   c:"Design Systems",  h:["#008060","#004C3F","#00848E","#F6F6F7"]},
+  {n:"Spectrum Adobe",    c:"Design Systems",  h:["#E34850","#2D9D78","#0265DC","#FFBF00"]},
+  {n:"Evergreen",         c:"Design Systems",  h:["#1070CA","#47B881","#EC4C47","#F7D154"]},
+
+  // ── Dark & Moody (15) ───────────
+  {n:"Void",              c:"Dark & Moody",    h:["#0A0A0A","#111111","#1A1A1A","#222222"]},
+  {n:"Obsidian",          c:"Dark & Moody",    h:["#0C0D0E","#161718","#2A2C2E","#3D3F41"]},
+  {n:"Deep Space",        c:"Dark & Moody",    h:["#000000","#0D0D1A","#1A0033","#330066"]},
+  {n:"Carbon",            c:"Dark & Moody",    h:["#1C1C1C","#363636","#555555","#7A7A7A"]},
+  {n:"Eclipse",           c:"Dark & Moody",    h:["#080808","#151515","#222222","#E5E5E5"]},
+  {n:"Tar Pit",           c:"Dark & Moody",    h:["#0D0D0D","#1A1A00","#2A2A00","#F5E642"]},
+  {n:"Noir",              c:"Dark & Moody",    h:["#0A0A0A","#1A1A2E","#16213E","#E94560"]},
+  {n:"Storm Cloud",       c:"Dark & Moody",    h:["#2C3E50","#34495E","#7F8C8D","#95A5A6"]},
+  {n:"Abyss",             c:"Dark & Moody",    h:["#020B18","#041C30","#063B5F","#0D6EFD"]},
+  {n:"Shadow Play",       c:"Dark & Moody",    h:["#0D0D0D","#1A1A2E","#2E1A47","#6B35FF"]},
+  {n:"Dead of Night",     c:"Dark & Moody",    h:["#000003","#0A0A14","#14141F","#1E1E2E"]},
+  {n:"Iron Curtain",      c:"Dark & Moody",    h:["#1A1A1A","#2D2D2D","#404040","#F0F0F0"]},
+  {n:"Coal Dust",         c:"Dark & Moody",    h:["#1A1007","#2E1C0D","#4A2E15","#7A5028"]},
+  {n:"Inkwell",           c:"Dark & Moody",    h:["#0A0A14","#141428","#1E1E3C","#2B2B50"]},
+  {n:"Pitch",             c:"Dark & Moody",    h:["#000000","#050505","#0A0A0A","#FAFAFA"]},
+
+  // ── Art & Culture (20) ──────────
+  {n:"Bauhaus Primary",   c:"Art & Culture",   h:["#FF0000","#FFFF00","#0000FF","#000000"]},
+  {n:"Art Deco Gold",     c:"Art & Culture",   h:["#C5A028","#8B6914","#4A3728","#F5E6C8"]},
+  {n:"Pop Art",           c:"Art & Culture",   h:["#FF007F","#FFFF00","#00BFFF","#FF4500"]},
+  {n:"Dutch Masters",     c:"Art & Culture",   h:["#8B6914","#4A3728","#C5A028","#1A1A1A"]},
+  {n:"Mondrian",          c:"Art & Culture",   h:["#FF0000","#0000FF","#FFFF00","#FFFFFF"]},
+  {n:"Warhol",            c:"Art & Culture",   h:["#FF007F","#FF6B00","#00FF00","#0000FF"]},
+  {n:"Rothko",            c:"Art & Culture",   h:["#8B0000","#DC143C","#B22222","#FF4500"]},
+  {n:"Klimt Gold",        c:"Art & Culture",   h:["#D4AF37","#AA8C2C","#7A6420","#3D2B00"]},
+  {n:"Matisse Cut-Outs",  c:"Art & Culture",   h:["#FF4040","#1E90FF","#FFD700","#228B22"]},
+  {n:"Picasso Blue",      c:"Art & Culture",   h:["#1B4F72","#2471A3","#7FB3D3","#D4E6F1"]},
+  {n:"Hokusai Wave",      c:"Art & Culture",   h:["#003366","#0066CC","#FFFFFF","#1A1A1A"]},
+  {n:"Ukiyo-e",           c:"Art & Culture",   h:["#C84B31","#ECDBBA","#2D4263","#191919"]},
+  {n:"Impressionist",     c:"Art & Culture",   h:["#87CEEB","#FFD700","#90EE90","#FFB6C1"]},
+  {n:"Memphis Design",    c:"Art & Culture",   h:["#FF6B9D","#A8FF3E","#1BE7FF","#FFD93D"]},
+  {n:"Swiss Poster",      c:"Art & Culture",   h:["#FF0000","#FFFFFF","#000000","#0000FF"]},
+  {n:"Constructivist",    c:"Art & Culture",   h:["#CC0000","#000000","#F5F5F5","#CC8800"]},
+  {n:"Expressionist",     c:"Art & Culture",   h:["#4B0082","#DC143C","#FF8C00","#000000"]},
+  {n:"Surrealist",        c:"Art & Culture",   h:["#FFD700","#1E3A5F","#C0392B","#F5F5DC"]},
+  {n:"De Stijl",          c:"Art & Culture",   h:["#FF0000","#FFFF00","#0000FF","#FFFFFF"]},
+  {n:"Pollock Drip",      c:"Art & Culture",   h:["#1A1A1A","#C0392B","#F39C12","#1ABC9C"]},
+
+  // Gradients (20)
+  {n:"Purple Haze",       c:"Gradients",       h:["#667EEA","#764BA2","#F093FB","#F5576C"]},
+  {n:"Emerald Sea",       c:"Gradients",       h:["#11998E","#38EF7D","#09C6F9","#045DE9"]},
+  {n:"Orange Burst",      c:"Gradients",       h:["#F7971E","#FFD200","#F33B00","#FF6B00"]},
+  {n:"Cosmic Fusion",     c:"Gradients",       h:["#FF00CC","#333399","#00FFFF","#FF6600"]},
+  {n:"Witching Hour",     c:"Gradients",       h:["#C31432","#240B36","#4776E6","#8E54E9"]},
+  {n:"Deep Sea",          c:"Gradients",       h:["#004E92","#000428","#00B4DB","#0083B0"]},
+  {n:"Burning Sunset",    c:"Gradients",       h:["#FF416C","#FF4B2B","#FEAC5E","#C779D0"]},
+  {n:"Royal Night",       c:"Gradients",       h:["#141E30","#243B55","#56CCF2","#2F80ED"]},
+  {n:"Mango Tango",       c:"Gradients",       h:["#FFE000","#799F0C","#FF7F50","#FF4500"]},
+  {n:"Sublime",           c:"Gradients",       h:["#FC5C7D","#6A3093","#4776E6","#8E54E9"]},
+  {n:"Electric Violet",   c:"Gradients",       h:["#4776E6","#8E54E9","#C471ED","#F64F59"]},
+  {n:"Love You",          c:"Gradients",       h:["#FF0F7B","#F89B29","#F64F59","#C471ED"]},
+  {n:"Bloody Mary",       c:"Gradients",       h:["#FF512F","#DD2476","#FF512F","#F09819"]},
+  {n:"Titanium",          c:"Gradients",       h:["#283048","#859398","#D7D7D7","#FFFFFF"]},
+  {n:"Neptune",           c:"Gradients",       h:["#4ECDC4","#44A08D","#093637","#1A1A2E"]},
+  {n:"Candy Pop",         c:"Gradients",       h:["#FF6CAB","#7366FF","#44E5E7","#FF9A3C"]},
+  {n:"Moonrise",          c:"Gradients",       h:["#DAE2F8","#D6A4A4","#F3E7E9","#E3EEF9"]},
+  {n:"Rose Garden",       c:"Gradients",       h:["#FF9A9E","#FECFEF","#FEADA6","#F5B7B1"]},
+  {n:"Deep Purple",       c:"Gradients",       h:["#673AB7","#512DA8","#4527A0","#311B92"]},
+  {n:"Sunrise Protocol",  c:"Gradients",       h:["#F3904F","#3B4371","#F5A623","#E8741A"]},
+
+  // ── Time & Light (15) ───────────
+  {n:"4AM Silence",       c:"Time & Light",    h:["#0A0A0F","#0D0D1A","#1A1A2E","#2A2A3E"]},
+  {n:"Blue Hour",         c:"Time & Light",    h:["#091540","#3D518C","#91ADC2","#E8E8E8"]},
+  {n:"Pre-Dawn",          c:"Time & Light",    h:["#1A1A2E","#16213E","#0F3460","#E94560"]},
+  {n:"Sunrise",           c:"Time & Light",    h:["#FF6B6B","#FFA07A","#FFD700","#87CEEB"]},
+  {n:"Morning Haze",      c:"Time & Light",    h:["#F0E6D3","#E6D5BF","#D4B89A","#C9A882"]},
+  {n:"High Noon",         c:"Time & Light",    h:["#FFFFFF","#F5F5F5","#E0E0E0","#1A1A1A"]},
+  {n:"Golden Hour Eve",   c:"Time & Light",    h:["#F7B733","#FC4A1A","#C1440E","#FFE066"]},
+  {n:"Magic Hour",        c:"Time & Light",    h:["#FF6B9D","#FF8E53","#FFC107","#7B68EE"]},
+  {n:"Dusk",              c:"Time & Light",    h:["#4A1942","#C71585","#FF6B9D","#FFB347"]},
+  {n:"Twilight",          c:"Time & Light",    h:["#1A0533","#2D1B69","#5C3696","#9B59B6"]},
+  {n:"Blue Velvet Night", c:"Time & Light",    h:["#0D1B2A","#1B2A4A","#2A3F6A","#6C91BF"]},
+  {n:"Stargazing",        c:"Time & Light",    h:["#000000","#0A0028","#1A0050","#FFFFFF"]},
+  {n:"Amber Evening",     c:"Time & Light",    h:["#FF6600","#FF8800","#FFAA00","#FFCC00"]},
+  {n:"Silver Dawn",       c:"Time & Light",    h:["#E8E8E8","#D0D0D0","#B8B8B8","#1A1A1A"]},
+  {n:"Candlelight",       c:"Time & Light",    h:["#FFB347","#FF8C00","#FF6600","#1A1A00"]},
+
+  // ── Mood & Feeling (15) ─────────
+  {n:"Focus Mode",        c:"Mood & Feeling",  h:["#2C3E50","#1A252F","#0D1419","#3498DB"]},
+  {n:"Zen Garden",        c:"Mood & Feeling",  h:["#F5F0EB","#E8D9CC","#BFA49A","#8C7B75"]},
+  {n:"Pure Energy",       c:"Mood & Feeling",  h:["#FF4500","#FF6B00","#FF8C00","#FFA500"]},
+  {n:"Deep Trust",        c:"Mood & Feeling",  h:["#003087","#0055B3","#3381E0","#A8C7F5"]},
+  {n:"Warmth",            c:"Mood & Feeling",  h:["#FF6B35","#F7931E","#FFD700","#FFF3CD"]},
+  {n:"Serenity",          c:"Mood & Feeling",  h:["#89B4FA","#B4BEFE","#CBA6F7","#F5C2E7"]},
+  {n:"Mystery",           c:"Mood & Feeling",  h:["#1A0033","#330066","#6600CC","#CC00FF"]},
+  {n:"Pure Joy",          c:"Mood & Feeling",  h:["#FF6B6B","#FFA500","#FFD700","#FF6B9D"]},
+  {n:"Nostalgia",         c:"Mood & Feeling",  h:["#D4A574","#C48B3B","#8B5E3C","#F5E6D3"]},
+  {n:"Melancholy",        c:"Mood & Feeling",  h:["#2C3E50","#34495E","#7F8C8D","#BDC3C7"]},
+  {n:"Euphoria",          c:"Mood & Feeling",  h:["#FF00CC","#FF6600","#FFFF00","#00FF66"]},
+  {n:"Tranquil",          c:"Mood & Feeling",  h:["#A8D8EA","#AA96DA","#FCBAD3","#FFFFD2"]},
+  {n:"Resolve",           c:"Mood & Feeling",  h:["#1A1A2E","#16213E","#0F3460","#E94560"]},
+  {n:"Wonder",            c:"Mood & Feeling",  h:["#B5D5C5","#C9F4AA","#FEDB72","#FF884B"]},
+  {n:"Tension",           c:"Mood & Feeling",  h:["#FF0000","#CC0000","#880000","#440000"]},
+];
+
+// STATE
+
+const categories = ['All', ...new Set(P.map(p => p.c))];
+let activeCat = 'All';
+let searchQ   = '';
+
+// CATEGORIES
+
+function buildCats() {
+  const wrap = document.getElementById('cats');
+  wrap.innerHTML = categories.map(c => `
+    <button class="cat-btn ${c==='All'?'active':''}" onclick="setCat('${c}')" id="cat-${c.replace(/[^a-z]/gi,'_')}">${c}</button>
+  `).join('');
+}
+
+function setCat(cat) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`cat-${cat.replace(/[^a-z]/gi,'_')}`).classList.add('active');
+  renderGrid();
+}
+
+// FILTER + RENDER
+
+function filterAll() {
+  searchQ = document.getElementById('search').value.toLowerCase();
+  renderGrid();
+}
+
+function filtered() {
+  return P.filter(p => {
+    const matchCat = activeCat === 'All' || p.c === activeCat;
+    const matchQ   = !searchQ || p.n.toLowerCase().includes(searchQ) ||
+                     p.c.toLowerCase().includes(searchQ) ||
+                     p.h.some(h => h.toLowerCase().includes(searchQ));
+    return matchCat && matchQ;
+  });
+}
+
+function renderGrid() {
+  const list  = filtered();
+  const grid  = document.getElementById('grid');
+  const meta  = document.getElementById('meta');
+  const count = document.getElementById('liveCount');
+
+  meta.textContent  = `${list.length} palettes`;
+  count.textContent = list.length;
+
+  if (!list.length) {
+    grid.innerHTML = `
+      <div class="no-results">
+        <div class="no-results-title">Nothing found</div>
+        <div style="color:var(--dim);font-size:13px">Try a different search or category</div>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map((p, i) => buildCard(p, i)).join('');
+}
+
+function buildCard(p, i) {
+  const delay = Math.min(i * 0.03, 0.4);
+  const bar   = p.h.map(hex => `
+    <div class="card-bar-strip" 
+         style="background:${hex}" 
+         data-hex="${hex}"
+         onclick="event.stopPropagation(); copyHex('${hex}')"></div>`).join('');
+  const swatches = p.h.map(hex => `
+    <button class="copy-swatch" 
+            style="background:${hex}" 
+            onclick="event.stopPropagation(); copyHex('${hex}')"
+            title="Copy ${hex}"></button>`).join('');
+
+  return `
+    <div class="card" 
+         style="animation-delay:${delay}s"
+         onmouseenter="setLive('${p.h[0]}')"
+         onclick="copyCSS(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      <div class="card-bar">${bar}</div>
+      <div class="card-body">
+        <div class="card-name">${p.n}</div>
+        <div class="card-cat">${p.c}</div>
+        <div class="card-actions">${swatches}</div>
+        <button class="copy-css-btn" onclick="event.stopPropagation(); copyCSS(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+          ⌘ Copy CSS vars
+        </button>
+      </div>
+    </div>`;
+}
+
+// DYNAMIC ACCENT
+
+function setLive(hex) {
+  document.documentElement.style.setProperty('--live', hex);
+}
+
+
+// COPY ACTIONS
+
+function copyHex(hex) {
+  navigator.clipboard.writeText(hex).then(() => toast(`Copied ${hex}`));
+}
+
+function copyCSS(p) {
+  if (typeof p === 'string') {
+    try { p = JSON.parse(p); } catch(e) { return; }
+  }
+  const vars = p.h.map((hex, i) => `  --${slugify(p.n)}-${i+1}: ${hex};`).join('\n');
+  const css  = `:root {\n${vars}\n}`;
+  navigator.clipboard.writeText(css).then(() => toast(`Copied "${p.n}" as CSS vars`));
+}
+
+function slugify(s) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g,'');
+}
+
+// ══════════════════════════════════
+// TOAST
+// ══════════════════════════════════
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// INIT
+
+buildCats();
+renderGrid();
+
+// Stagger animation delay reset on filter
+document.getElementById('search').addEventListener('input', () => {
+  document.getElementById('grid').style.opacity = '0.5';
+  setTimeout(() => { document.getElementById('grid').style.opacity = '1'; }, 150);
+});
+</script>
+</body>
+</html>
